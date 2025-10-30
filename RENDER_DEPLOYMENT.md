@@ -23,28 +23,19 @@ Start Command: npm run start:render
 
 ### 2. Via Render CLI (Blueprint)
 
-Créez un fichier `render.yaml` :
-
-```yaml
-services:
-  - type: web
-    name: ssm-mobility-backend
-    env: node
-    buildCommand: npm run build
-    startCommand: npm run start:render
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: MONGODB_URI
-        sync: false
-      - key: JWT_SECRET
-        generateValue: true
-      - key: FRONTEND_URL
-        sync: false
+**Option A - Configuration manuelle (Recommandée) :**
+Utilisez le dashboard web avec ces paramètres :
+```
+Runtime: Node
+Build Command: npm install && npm run build
+Start Command: npm run start:render
 ```
 
-Puis déployez :
+**Option B - Blueprint YAML :**
+Le fichier `render.yaml` est configuré, mais la méthode manuelle est plus simple.
+
 ```bash
+# Si vous voulez utiliser le blueprint
 render deploy
 ```
 
@@ -104,3 +95,27 @@ curl https://votre-app-name.onrender.com/api/health
 - **Plan gratuit** : L'app peut "dormir" après 15min d'inactivité
 - **Cold start** : Premier démarrage peut prendre 30-60 secondes
 - **Persistent storage** : Utilisez une base de données externe (MongoDB Atlas)
+
+## 🔧 Résolution des problèmes courants
+
+### Erreur "tsc: Permission denied"
+
+**Solution 1 - Sans Docker (Recommandé) :**
+```
+Build Command: npm install && npm run build
+Start Command: npm run start:render
+```
+
+**Solution 2 - Dockerfile corrigé :**
+- Utilise `npm ci` (pas `--only=production`)
+- Compile avec `npx tsc`
+- Multi-stage build pour optimiser
+
+**Solution 3 - Dockerfile alternatif :**
+Renommez `Dockerfile.alternative` en `Dockerfile` pour un build multi-stage optimisé.
+
+### Build qui échoue
+
+1. **Vérifiez les logs** dans le dashboard Render
+2. **Testez localement** : `npm run build`
+3. **Utilisez la méthode sans Docker** (plus simple)

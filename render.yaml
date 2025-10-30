@@ -1,11 +1,13 @@
 services:
   - type: web
     name: ssm-mobility-backend
-    env: node
-    plan: starter
-    buildCommand: npm run build
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm install && npm run build
     startCommand: npm run start:render
     healthCheckPath: /api/health
+    numInstances: 1
     envVars:
       - key: NODE_ENV
         value: production

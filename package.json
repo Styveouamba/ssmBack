@@ -13,6 +13,8 @@
     "vercel-build": "echo 'No build step required for serverless'",
     "verify-vercel": "ts-node scripts/verify-vercel-config.ts",
     "test-deployment": "ts-node scripts/test-deployment.ts",
+    "debug-render": "ts-node scripts/debug-render.ts",
+    "remove-docker": "ts-node scripts/remove-docker.ts",
     "test-config": "ts-node scripts/test-config.ts",
     "test-optimization": "ts-node scripts/test-position-optimization.ts",
     "cleanup-positions": "ts-node scripts/cleanup-positions.ts",

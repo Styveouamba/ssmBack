@@ -6,15 +6,19 @@ WORKDIR /app
 
 # Copier les fichiers de dépendances
 COPY package*.json ./
+COPY tsconfig.json ./
 
-# Installer les dépendances
-RUN npm ci --only=production
+# Installer TOUTES les dépendances (dev incluses pour TypeScript)
+RUN npm ci
 
 # Copier le code source
 COPY . .
 
-# Compiler TypeScript
-RUN npm run build
+# Compiler TypeScript avec npx pour éviter les problèmes de permissions
+RUN npx tsc
+
+# Nettoyer les dev dependencies après build
+RUN npm prune --production
 
 # Exposer le port
 EXPOSE $PORT
