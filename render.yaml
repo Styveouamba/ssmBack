@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ssm-mobility-backend
+    env: node
+    plan: starter
+    buildCommand: npm run build
+    startCommand: npm run start:render
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false
